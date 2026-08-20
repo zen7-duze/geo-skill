@@ -3,14 +3,14 @@ name: vigilath-radar
 description: 你的客户会怎么问 AI,而你在哪些问题上根本不存在——一次扩出 40 条真实提问,标出你完全没出现的那些。当用户问「客户会怎么搜我 / 用户会问 AI 什么 / 我该盯哪些问题 / 哪些提问我没覆盖 / 帮我找关键词」时使用。看候选词免费;把词变成持续跟踪要收费。
 slug: vigilath-radar
 version: 1.0.0
-displayName: 提问词雷达
-summary: 你的客户会怎么问 AI,而你在哪些问题上根本不存在
+displayName: 客户会怎么问 AI
+summary: 一次列出 40 条客户真会问的问题,标出你完全没出现的那些
 tags: [GEO, AI搜索, 关键词, 选词]
 license: Apache-2.0
 homepage: https://github.com/zen7-duze/geo-skill
 ---
 
-# 提问词雷达
+# 客户问题清单
 
 把用户的品牌/行业展开成**客户真的会对 AI 说的那些话**(不是搜索关键词,是完整提问),并标出哪些问题上他完全不存在。
 
@@ -44,7 +44,7 @@ homepage: https://github.com/zen7-duze/geo-skill
 
 ```bash
 python scripts/geo_client.py chat "帮我扩一批客户会问 AI 的问题,行业是 XXX"
-python scripts/geo_client.py data coverage    # 累计被命中的问题数 / 种子词数
+python scripts/geo_client.py data coverage    # 累计被命中的问题数 / 核心关键词数
 ```
 
 扩词按四类场景展开(检索型 / 问答型 / 意图型 / 品牌型),一次给约 40 条候选。
@@ -62,8 +62,8 @@ python scripts/geo_client.py data coverage    # 累计被命中的问题数 / �
 ## 免费与墙
 
 - **免费**:40 条候选词全预览 + 缺口标记,随便看
-- **墙**:把选中的问题**落库变成持续跟踪**(进入监测跑批)是收费的
+- **墙**:把选中的问题**加入持续监测变成持续跟踪**(进入监测定时检测)是收费的
 
 分界线对用户很好讲:**看得见缺口不要钱,让我们持续替你盯着才要钱。**
 
-落库前必须停下来确认,说清这一步开始计费。用户只是想看看的话,预览完就停,别自作主张落库。
+加入持续监测前必须停下来确认,说清这一步开始计费。用户只是想看看的话,预览完就停,别自作主张加入持续监测。

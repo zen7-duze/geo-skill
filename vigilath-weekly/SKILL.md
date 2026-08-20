@@ -3,8 +3,8 @@ name: vigilath-weekly
 description: 每周告诉你在 AI 搜索里涨了还是跌了——六项固定指标 + 环比 + 达标判定,日报周报月报都能取。当用户问「这周怎么样 / 数据涨了吗 / 最近表现如何 / 露出率多少 / 达标了吗 / 上个月的报告」时使用。需要授权,且账号得已经在跑监测。
 slug: vigilath-weekly
 version: 1.0.0
-displayName: AI 可见性周报
-summary: 每周告诉你在 AI 搜索里涨了还是跌了,六项指标 + 环比 + 达标
+displayName: AI 搜索周报
+summary: 每周告诉你在 AI 里涨了还是跌了,六项指标一眼看完
 tags: [GEO, AI搜索, 数据报告, 监测]
 license: Apache-2.0
 homepage: https://github.com/zen7-duze/geo-skill
@@ -25,7 +25,7 @@ homepage: https://github.com/zen7-duze/geo-skill
 | 分平台 | 各引擎的整体露出率 |
 | 走势 | 最近若干期连起来看 |
 | 本期总结 | 该期的 AI 总结正文 |
-| 跑批状态 | 最近一次跑完没有、哪个平台报错 |
+| 定时检测状态 | 最近一次跑完没有、哪个平台报错 |
 
 这些是**直接取数、不走大模型**,所以快且省。
 
@@ -52,7 +52,7 @@ homepage: https://github.com/zen7-duze/geo-skill
 python scripts/geo_client.py data overview    # 日/周/月各最新一期:六指标 + 环比 + 达标
 python scripts/geo_client.py data period      # 某一期详情 + 该期 AI 总结正文
 python scripts/geo_client.py data periods     # 最近若干期,看走势
-python scripts/geo_client.py data run         # 最近一次跑批状态(跑完没/多少条/哪个平台报错)
+python scripts/geo_client.py data run         # 最近一次定时检测状态(跑完没/多少条/哪个平台报错)
 ```
 
 这些是**直接取数,不走大模型**,快且省。
@@ -64,7 +64,7 @@ python scripts/geo_client.py data run         # 最近一次跑批状态(跑完�
 不要自创「命中率」「曝光率」「覆盖率」来指代它们。
 
 - **只念接口返回的数字。** 绝不自己换算、绝不把不同命令的数字相加或相除。百分比已经是最终值(0–100 且已四舍五入),**不要再乘 100**。
-- **以已收口的期次为准。** 日报最新一期是**昨天**,今天的还在跑。用户问「今天怎么样」时先给已收口的数字,再补一句今天的进行中数据并**标明未收口、仅供参考**,绝不拿它下结论。
+- **以已统计完成的那一期为准。** 日报最新一期是**昨天**,今天的还在跑。用户问「今天怎么样」时先给已统计完成的数字,再补一句今天的进行中数据并**标明还在统计中、仅供参考**,绝不拿它下结论。
 - **「达标了吗」一律看周报**,不要用日报数字回答。
 - `data coverage`(问题有没有被搜到过,按问题去重)与整体露出率(按应答条数)是**两个口径**,不可混用、不可互相换算。
 

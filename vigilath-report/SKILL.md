@@ -3,8 +3,8 @@ name: vigilath-report
 description: 一份能发给老板的 AI 可见性诊断报告——八项子检测、五维评分、十一章、可导 PDF。拿用户的品牌真的去问 DeepSeek / 豆包 / 通义 / 文心 / 元宝,把引擎原话贴回来。需要授权,整单 8-20 分钟。当用户问「AI 到底提不提我 / AI 搜索里能搜到我吗 / 给我出一份诊断报告 / 我的 AI 可见性怎么样 / 为什么 AI 不推荐我」时使用。要快速看网站本身用 vigilath-site-audit。
 slug: vigilath-report
 version: 1.0.0
-displayName: AI 可见性诊断报告
-summary: 一份能发给老板的报告:八项子检测、五维评分、十一章、可导 PDF
+displayName: 品牌 AI 搜索体检报告
+summary: 一份能直接发给老板的报告:八项检测、五维评分、十一章、可导 PDF
 tags: [GEO, AI搜索, 诊断报告, 竞品分析]
 license: Apache-2.0
 homepage: https://github.com/zen7-duze/geo-skill

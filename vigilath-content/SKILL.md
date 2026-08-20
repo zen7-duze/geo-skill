@@ -3,14 +3,14 @@ name: vigilath-content
 description: 针对你缺席的那个问题,写一篇 AI 愿意引用的文章——而且写完先过一遍广告法词库和资质校验。当用户问「帮我写篇文章 / 针对这个问题写点内容 / 怎么让 AI 引用我 / 写一篇能被 AI 引用的稿子」时使用。提纲和首段免费;全文与配图收费。真实对外发布不在本技能内。
 slug: vigilath-content
 version: 1.0.0
-displayName: 可被引内容生成
-summary: 针对你缺席的问题写一篇 AI 愿意引用的文章,写完先过广告法
+displayName: 写一篇 AI 愿意引用的文章
+summary: 针对你缺席的问题成稿,发布前先过一遍广告法和资质校验
 tags: [GEO, 内容生成, 合规, 广告法]
 license: Apache-2.0
 homepage: https://github.com/zen7-duze/geo-skill
 ---
 
-# 可被引内容生成
+# 写能被 AI 引用的文章
 
 挑一条 AI 回答里没有你的问题,写一篇**结构上让 AI 愿意引用**的文章。
 

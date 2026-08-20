@@ -3,14 +3,14 @@ name: vigilath-sentinel
 description: 真社媒抓取的品牌负面预警——真人真发的帖子,带原帖链接和发布时间,不是"AI 怎么回答口碑问题"。当用户问「今天有没有负面 / 舆情怎么样 / 有人在骂我们吗 / 风险高不高 / 有什么热点可以蹭 / 帮我改监测词」时使用。今日前几条与热榜免费;历史、预警与配词收费。
 slug: vigilath-sentinel
 version: 1.0.0
-displayName: 品牌舆情哨兵
-summary: 真社媒抓取的负面预警,带原帖链接和发布时间
+displayName: 品牌负面预警
+summary: 真人在社交媒体上说了什么——带原帖链接和时间,不是 AI 编的
 tags: [舆情, 品牌监测, 风险预警]
 license: Apache-2.0
 homepage: https://github.com/zen7-duze/geo-skill
 ---
 
-# 品牌舆情哨兵
+# 品牌负面预警
 
 抓**真实社交媒体上真人发的帖子**,做情感判定与风险分级,带原帖链接和发布时间。
 

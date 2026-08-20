@@ -3,14 +3,14 @@ name: vigilath-site-audit
 description: 给一个网址,告诉你 AI 爬虫读不读得懂这个网站——25 类逐项评分 + 0-100 分与字母等级。免登录、免费、不限次,30 秒出结果。当用户给出一个网址并问「AI 爬虫读得懂我的网站吗 / 这个站对 AI 友好吗 / AI 搜索能收录我吗 / 网站 GEO 分数多少 / 帮我体检一下官网」时使用。**只管网站自身**;要问「AI 引擎实际怎么说我这个品牌」用 vigilath-report,要问传统搜索引擎那套用 vigilath-seo-audit。
 slug: vigilath-site-audit
 version: 1.0.0
-displayName: 网站 AI 可读性体检
-summary: 给个网址,告诉你 AI 爬虫读不读得懂——25 类逐项评分,免登录不限次
+displayName: 网站 AI 友好度检测
+summary: 给个网址,看 AI 能不能读懂你的网站——25 项逐条打分,免注册、不限次
 tags: [GEO, AI搜索, 网站检测, SEO, 免登录]
 license: Apache-2.0
 homepage: https://github.com/zen7-duze/geo-skill
 ---
 
-# 网站 AI 可读性体检
+# 网站 AI 友好度体检
 
 给一个网址,25 类检查逐项跑完,回一个 0–100 分和字母等级,外加哪几项没做对。
 

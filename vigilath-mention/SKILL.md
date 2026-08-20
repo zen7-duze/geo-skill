@@ -3,14 +3,14 @@ name: vigilath-mention
 description: 拿你的品牌真的去问 AI,把它的原话贴回来——3 个引擎 × 3 条客户会问的品类问题,看 AI 推荐了谁、有没有你。**不需要登录**,每台设备免费 2 次/30 天。当用户问「AI 会不会推荐我 / 问 AI 我这行谁好会说到我吗 / AI 提不提我的品牌 / 客户问 AI 时我出现吗」时使用。要完整多引擎口径用 vigilath-report,要测网站本身用 vigilath-site-audit。
 slug: vigilath-mention
 version: 1.0.0
-displayName: AI 提及快测
-summary: 拿你的品牌去问 AI,把引擎原话贴回来——看 AI 推荐了谁、有没有你
+displayName: AI 会不会推荐你
+summary: 拿你的品牌去问 AI,把它的原话贴回来——看它到底推荐了谁
 tags: [GEO, AI搜索, 品牌监测, 竞品分析, 免登录]
 license: Apache-2.0
 homepage: https://github.com/zen7-duze/geo-skill
 ---
 
-# AI 提及快测
+# AI 推荐检测
 
 拿用户的品牌**真的去问 AI 引擎**,把原话贴回来。看的不是分数,是这句话:**客户这么问的时候,AI 说的是谁。**
 
