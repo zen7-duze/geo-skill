@@ -109,6 +109,33 @@ class StructureTest(unittest.TestCase):
             with self.subTest(advanced_mode=mode):
                 self.assertIn(mode, umbrella, f"全能包文档没提到高级检测模式 {mode!r}")
 
+    def test_网站九张卡片全部列入(self):
+        """网站「高级检测能力」那一屏的九张卡片,全能包文档必须逐条列到。
+
+        用户看着网站上的卡片名来问,文档里没有这个词,agent 就接不上话。
+        名字取自 i18n 的 home.advanced.cards.*,改文案时两边要一起改。
+        """
+        cards = ["一键全面诊断", "AEO 可见性审计", "竞争对比检测", "AI 爬虫测试",
+                 "权威信号审计", "AI 引用检测", "AI 可见性审计", "实体 GEO 审计", "舆情监测"]
+        doc = (ROOT / "vigilath-geo" / "SKILL.md").read_text(encoding="utf-8")
+        for c in cards:
+            with self.subTest(card=c):
+                self.assertIn(c, doc, f"网站上有「{c}」这张卡片,全能包文档里没提")
+
+    def test_合集列全八个窄技能(self):
+        """全能包是「合集」,SkillHub 上架的就是它 —— 八个窄技能的名字必须都能在里面找到。
+
+        用户装了合集,就该在文档里看到自己买到了哪些能力;
+        少列一个,那个能力对他等于不存在。
+        """
+        umbrella = (ROOT / "vigilath-geo" / "SKILL.md").read_text(encoding="utf-8")
+        for md in SKILLS:
+            if md.parent.name == "vigilath-geo":
+                continue
+            name = frontmatter(md).get("displayName", "")
+            with self.subTest(skill=md.parent.name, displayName=name):
+                self.assertIn(name, umbrella, f"合集里没提到「{name}」({md.parent.name})")
+
     def test_没有内部信息泄漏(self):
         """这些文件会进公开仓库 —— 内网地址、内部服务名、凭证样式都不能有。"""
         bad = re.compile(r"127\.0\.0\.1|localhost|172\.80|123\.125|/opt/geo|ec2-|"
@@ -132,3 +159,24 @@ class StructureTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class CoverageAgainstBackendTest(unittest.TestCase):
+    """与后端能力对齐 —— 仅在能看到后端源码时运行(公开仓库里自动跳过)。
+
+    2026-08-20 两次漏接:第一次漏了 visibility(网站七张卡片只接了六个),
+    第二次漏了 competitive-intel(后端有端点、标 free,网站卡片里没有)。
+    靠人眼比对必然再漏,所以让测试直接数后端有几个。
+    """
+
+    def test_高级检测模式与后端一致(self):
+        backend = ROOT.parent / "backend" / "geo" / "api" / "advanced_anon.py"
+        if not backend.exists():
+            self.skipTest("看不到后端源码(公开仓库里正常)")
+        server_modes = set(re.findall(r'@router\.post\("/check/advanced-anon/([a-z-]+)"\)',
+                                      backend.read_text(encoding="utf-8")))
+        client = (ROOT / "vigilath-geo" / "scripts" / "geo_client.py").read_text(encoding="utf-8")
+        client_modes = set(re.findall(r'^\s+"([a-z-]+)":\s+\("(?:url|entity|urls)"', client, re.M))
+        self.assertEqual(server_modes, client_modes,
+                         f"后端有而 skill 没接:{server_modes - client_modes};"
+                         f"skill 有而后端没有:{client_modes - server_modes}")
