@@ -9,7 +9,9 @@
   python geo_client.py check https://example.com --seo-only    # 只要 SEO
   python geo_client.py mention 你的品牌名 商用清洁机器人             # 免登录!拿品牌去问 AI,贴回原话
   python geo_client.py wallet                                  # 看余额(花钱前先看)
-  python geo_client.py topup 100                               # 充值:拿付款要求
+  python geo_client.py topup 100 --wechat                      # 充值:走微信支付(推荐)
+  python geo_client.py topup 100 --wechat --order <订单号>      # 付完后必须带订单号重试
+  python geo_client.py topup 100                               # 充值:链上 USDC
   python geo_client.py advanced aeo https://example.com        # 免登录!AEO 审计(零成本)
   python geo_client.py advanced entity 某某品牌                 # 免登录!实体认知审计
   python geo_client.py industry                                # 免登录!已建库的行业清单
@@ -288,6 +290,40 @@ def wallet() -> dict:
     return get("wallet")
 
 
+def topup_wechat(amount_yuan: str, out_trade_no: str = "") -> dict:
+    """用**微信**充值(SkillHub Pay Skill 那条路)。返回里带 WeixinPay-Required,
+    把它作为 paymentCode 交给宿主的 weixinpay_pay 工具,向用户申请支付授权。
+
+    **到账以微信回调为准** —— 用户授权后过几秒查 `wallet` 看余额,别假定立刻到账。
+    """
+    try:
+        cents = int(round(float(amount_yuan) * 100))
+    except ValueError:
+        _die(f"充值金额要是数字(元),收到:{amount_yuan!r}")
+    headers = dict(_headers())
+    if out_trade_no:
+        # ★ 支付后重试必须带这个头 —— 不带就永远拿不到结果(SkillHub 最佳实践点名的头号坑)
+        headers["X-Out-Trade-No"] = out_trade_no
+    req = urllib.request.Request(
+        f"{SITE_API}/skillpay/topup",
+        data=json.dumps({"amount_cents": cents}).encode("utf-8"),
+        headers=headers,
+        method="POST",
+    )
+    try:
+        with _request(req, timeout=60) as resp:
+            return json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        if e.code == 402:
+            # 402 是这条流程的正常一步:它带着支付触发标识
+            d = json.loads(e.read().decode("utf-8", "ignore") or "{}")
+            d["_hint"] = ("这不是失败。① 把 WeixinPay-Required 作为 paymentCode 交给 "
+                          "weixinpay_pay 申请授权;② 用户付完后,**带上 X-Out-Trade-No 再跑一次**:"
+                          "`topup <金额> --wechat --order <订单号>` —— 漏了第二步就拿不到结果。")
+            return d
+        raise
+
+
 def topup(amount_yuan: str, tx_hash: str = "") -> dict:
     """充值。两步:先拿付款要求(402),链上付完再带 tx_hash 回来核销。
 
@@ -487,6 +523,13 @@ def main(argv: list) -> "None":
     elif cmd == "topup":
         if len(argv) < 3:
             _die("topup 需要金额(元),如:topup 100;付款后核销:topup 100 --tx 0x…")
+        if "--wechat" in argv:
+            order = ""
+            if "--order" in argv:
+                i = argv.index("--order")
+                order = argv[i + 1] if len(argv) > i + 1 else ""
+            print(json.dumps(topup_wechat(argv[2], order), ensure_ascii=False, indent=2))
+            return
         tx = ""
         if "--tx" in argv:
             i = argv.index("--tx")

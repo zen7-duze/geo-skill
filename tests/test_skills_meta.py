@@ -157,10 +157,6 @@ class StructureTest(unittest.TestCase):
                 self.assertIn(mod.split(".")[0], stdlib_ok, f"引入了非标准库 {mod}")
 
 
-if __name__ == "__main__":
-    unittest.main(verbosity=2)
-
-
 class CoverageAgainstBackendTest(unittest.TestCase):
     """与后端能力对齐 —— 仅在能看到后端源码时运行(公开仓库里自动跳过)。
 
@@ -180,3 +176,29 @@ class CoverageAgainstBackendTest(unittest.TestCase):
         self.assertEqual(server_modes, client_modes,
                          f"后端有而 skill 没接:{server_modes - client_modes};"
                          f"skill 有而后端没有:{client_modes - server_modes}")
+
+
+class BackendSanityTest(unittest.TestCase):
+    """后端自检 —— 仅在能看到后端源码时运行(公开仓库里自动跳过)。"""
+
+    def test_微信服务里调用的自身方法都存在(self):
+        """`self.xxx()` 调了不存在的方法,Python 要等到那行真跑到才报错。
+
+        2026-08-20 就这么炸过:create_topup_native_order 里写了 self.is_configured(),
+        而这个方法根本不存在;单测把整个函数 mock 掉了,直到线上第一次真调才发现。
+        """
+        src = ROOT.parent / "backend" / "geo" / "services" / "wechat_pay_service.py"
+        if not src.exists():
+            self.skipTest("看不到后端源码(公开仓库里正常)")
+        # 去掉注释与文档字符串再扫 —— 否则"我原来写成了 self.xxx()"这种注释会误报
+        raw = src.read_text(encoding="utf-8")
+        text = re.sub(r'"""[\s\S]*?"""', "", raw)
+        text = "\n".join(re.sub(r"#.*$", "", ln) for ln in text.splitlines())
+        defined = set(re.findall(r"^\s{4}def ([a-zA-Z_]+)\(", text, re.M))
+        called = set(re.findall(r"self\.([a-zA-Z_]+)\(", text))
+        missing = {c for c in called if c not in defined}
+        self.assertFalse(missing, f"调用了不存在的方法:{sorted(missing)}")
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)

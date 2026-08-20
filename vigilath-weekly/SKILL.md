@@ -48,6 +48,8 @@ homepage: https://github.com/zen7-duze/geo-skill
 
 ## 怎么用
 
+> 下面的命令**由 AI 助手执行,你不用敲** —— 直接用上面那些话问它就行。
+
 ```bash
 python scripts/geo_client.py data overview    # 日/周/月各最新一期:六指标 + 环比 + 达标
 python scripts/geo_client.py data period      # 某一期详情 + 该期 AI 总结正文

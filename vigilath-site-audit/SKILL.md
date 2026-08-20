@@ -100,6 +100,8 @@ homepage: https://github.com/zen7-duze/geo-skill
 
 ## 怎么用
 
+> 下面的命令**由 AI 助手执行,你不用敲** —— 直接用上面那些话问它就行。
+
 ```bash
 python scripts/geo_client.py check https://example.com --no-seo
 ```
@@ -111,10 +113,10 @@ python scripts/geo_client.py check https://example.com --no-seo
 - `geo.visible_categories` —— 能看明细的类目,每条带 `status` 和原文结论
 - `geo.locked_categories` —— **只给类目名、没有结论**的那些
 
-## 报告纪律
+## 结果怎么读
 
 - **锁住的类目绝不编结论。** 只能说「这几类要注册后才能看明细」,不能替它猜是好是坏。
-- **念具体的那一条,别只念分数。** 用户要的是「sitemap.xml 没有」这种能立刻动手的事实。
+- **结果里给的是具体条目,不只是分数。** 你会看到「sitemap.xml 没有」这种能立刻动手的事实。
 - **分数低不等于网站差** —— 这套测的是「对 AI 抓取与理解的友好度」,和网站好不好看、卖得好不好无关,别引申。
 
 ## 免费与墙

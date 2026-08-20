@@ -63,13 +63,15 @@ homepage: https://github.com/zen7-duze/geo-skill
 
 ## 怎么用
 
+> 下面的命令**由 AI 助手执行,你不用敲** —— 直接用上面那些话问它就行。
+
 ```bash
 python scripts/geo_client.py check https://example.com --seo-only
 ```
 
 返回 `seo.score` / `seo.grade` / `seo.visible_categories` / `seo.locked_categories`,结构与网站体检一致。
 
-## 最重要的一条纪律
+## 两个分数不要混
 
 **SEO 分和 GEO 分是两套独立口径,永远分开说。**
 

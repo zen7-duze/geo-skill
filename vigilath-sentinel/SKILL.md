@@ -52,6 +52,8 @@ homepage: https://github.com/zen7-duze/geo-skill
 
 ## 怎么用
 
+> 下面的命令**由 AI 助手执行,你不用敲** —— 直接用上面那些话问它就行。
+
 ```bash
 python scripts/geo_client.py chat "今天舆情怎么样?有没有负面?"
 python scripts/geo_client.py chat "上个月有哪些负面"
@@ -59,7 +61,7 @@ python scripts/geo_client.py chat "今天有什么热点可以蹭"
 python scripts/geo_client.py chat "把监测词加上 XXX"
 ```
 
-## 展示纪律
+## 结果怎么读
 
 - **情感分用百分比**表述;立场 / 意图 / 事实性这些判定必须用中文说法,不要念英文枚举值。
 - 每条负面**给原帖链接和发布时间**。给不出链接的结论不要说。

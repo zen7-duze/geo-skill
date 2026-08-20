@@ -42,6 +42,8 @@ homepage: https://github.com/zen7-duze/geo-skill
 
 ## 怎么用
 
+> 下面的命令**由 AI 助手执行,你不用敲** —— 直接用上面那些话问它就行。
+
 ```bash
 python scripts/geo_client.py chat "帮我扩一批客户会问 AI 的问题,行业是 XXX"
 python scripts/geo_client.py data coverage    # 累计被命中的问题数 / 核心关键词数
@@ -49,7 +51,7 @@ python scripts/geo_client.py data coverage    # 累计被命中的问题数 / �
 
 扩词按四类场景展开(检索型 / 问答型 / 意图型 / 品牌型),一次给约 40 条候选。
 
-## 三态纪律
+## 三种状态的区别
 
 每条问题有三种状态,**必须分开说,永远不要合并**:
 
