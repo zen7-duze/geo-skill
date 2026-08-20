@@ -36,7 +36,8 @@ openclaw skills install git:zen7-duze/geo-skill@main --global
 | `vigilath-weekly` | 每周告诉你涨了还是跌了 | 无 | 秒 | 是 | 首期一份;**第二期起订阅** |
 | `vigilath-sentinel` | 真社媒抓取的负面预警 | 品牌 + 别名 | 秒 | 是 | 今日前 5 条 + 热榜;**历史/预警/配词 → 收费** |
 
-`vigilath-geo` = 兜底全能包,七种场景一个描述全吃,只投给一次只肯装一个技能的宿主。
+`vigilath-geo` = 兜底全能包,**八种场景一个包全吃**(上面八个窄技能的能力它都有),
+给一次只肯装一个技能的宿主用。SkillHub 上架的就是它。
 
 ## 收费边界
 

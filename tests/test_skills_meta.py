@@ -93,6 +93,22 @@ class StructureTest(unittest.TestCase):
                 self.assertTrue((fm.get("summary") or "").strip(), "缺 summary(商店列表页展示这句)")
                 self.assertLessEqual(len(fm.get("summary", "")), 120, "summary 太长,列表页会截断")
 
+    def test_全能包覆盖客户端所有命令(self):
+        """全能包是唯一入口(SkillHub 上架的就是它),客户端有的命令它必须都写到。
+
+        只在表格里写中文能力名不算数 —— agent 要照着敲命令,
+        文档里没有命令名,它就跑不出来。2026-08-20 漏过 mention。
+        """
+        client = (ROOT / "vigilath-geo" / "scripts" / "geo_client.py").read_text(encoding="utf-8")
+        umbrella = (ROOT / "vigilath-geo" / "SKILL.md").read_text(encoding="utf-8")
+        cmds = set(re.findall(r'cmd == "([a-z-]+)"', client))
+        for c in sorted(cmds):
+            with self.subTest(cmd=c):
+                self.assertIn(c, umbrella, f"全能包文档没提到命令 {c!r}")
+        for mode in re.findall(r'^\s+"([a-z-]+)":\s+\("(?:url|entity|urls)"', client, re.M):
+            with self.subTest(advanced_mode=mode):
+                self.assertIn(mode, umbrella, f"全能包文档没提到高级检测模式 {mode!r}")
+
     def test_没有内部信息泄漏(self):
         """这些文件会进公开仓库 —— 内网地址、内部服务名、凭证样式都不能有。"""
         bad = re.compile(r"127\.0\.0\.1|localhost|172\.80|123\.125|/opt/geo|ec2-|"

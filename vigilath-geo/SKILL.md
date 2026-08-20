@@ -143,6 +143,16 @@ homepage: https://github.com/zen7-duze/geo-skill
   **只给类目名、不给结论**,也没有修复建议。念分数和已见明细即可,
   **不要对锁住的类目编造结论**;想要完整明细就照 `note` 引导用户注册后 `login`。
 
+- **AI 提及快测**(免登录,每台设备 2 次 / 30 天):拿品牌**真的去问 AI**,把原话贴回来。
+  ```bash
+  python scripts/geo_client.py mention 你的品牌名 商用清洁机器人
+  python scripts/geo_client.py mention-status <task_id>    # 等超时了再查
+  ```
+  问的是**品类问题**(「XX 推荐」「XX 哪个品牌好」),不是「你家怎么样」——
+  品牌自查题的答案里必然出现品牌名,看不出有没有被推荐。约 1–3 分钟。
+  **把 `answer_excerpt` 里的引擎原话念给用户**,那才是最有价值的产出;
+  `mentioned_in`/`answered` 是计数,**不要换算成百分比**,3 条问题的样本量不支持算率。
+
 - **高级检测**(免登录;前两个零成本不限次,后四个有额度):
   ```bash
   python scripts/geo_client.py advanced aeo https://example.com          # AEO 可见性审计
