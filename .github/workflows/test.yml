@@ -1,0 +1,24 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # 刻意不装任何依赖:这套 skill 的立身之本就是零三方依赖,
+      # CI 里一旦需要 pip install,说明代码已经破坏了这个承诺。
+      - name: 单元测试(客户端)
+        run: python3 tests/test_geo_client.py
+      - name: 结构校验(技能包 frontmatter / 命令一致性 / 无内部信息)
+        run: python3 tests/test_skills_meta.py
+      - name: 行为测试(install.sh)
+        run: bash tests/test_install.sh
