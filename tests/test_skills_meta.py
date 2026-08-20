@@ -202,3 +202,24 @@ class BackendSanityTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class CoverageAgainstBackendTest(unittest.TestCase):
+    """与后端能力对齐 —— 仅在能看到后端源码时运行(公开仓库里自动跳过)。
+
+    2026-08-20 两次漏接:第一次漏了 visibility(网站七张卡片只接了六个),
+    第二次漏了 competitive-intel(后端有端点、标 free,网站卡片里没有)。
+    靠人眼比对必然再漏,所以让测试直接数后端有几个。
+    """
+
+    def test_高级检测模式与后端一致(self):
+        backend = ROOT.parent / "backend" / "geo" / "api" / "advanced_anon.py"
+        if not backend.exists():
+            self.skipTest("看不到后端源码(公开仓库里正常)")
+        server_modes = set(re.findall(r'@router\.post\("/check/advanced-anon/([a-z-]+)"\)',
+                                      backend.read_text(encoding="utf-8")))
+        client = (ROOT / "vigilath-geo" / "scripts" / "geo_client.py").read_text(encoding="utf-8")
+        client_modes = set(re.findall(r'^\s+"([a-z-]+)":\s+\("(?:url|entity|urls)"', client, re.M))
+        self.assertEqual(server_modes, client_modes,
+                         f"后端有而 skill 没接:{server_modes - client_modes};"
+                         f"skill 有而后端没有:{client_modes - server_modes}")
